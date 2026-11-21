@@ -65,8 +65,8 @@ document.addEventListener("DOMContentLoaded",()=>{
     try{
       const r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"assistant-chat",history:history.slice(-12)})});
       const d=await r.json();if(!r.ok||!d.success)throw new Error(d.message||"Assistant abhi reply nahi kar pa raha.");
-      waiting.textContent=d.answer;history.push({role:"model",text:d.answer});
-    }catch(err){waiting.textContent=err.message||"Network error. Dobara try karein.";}
+      const waitingText=waiting.querySelector("span");if(waitingText)waitingText.textContent=d.answer;history.push({role:"model",text:d.answer});
+    }catch(err){const waitingText=waiting.querySelector("span");if(waitingText)waitingText.textContent=err.message||"Network error. Dobara try karein.";}
     finally{send.disabled=false;input.focus();messages.scrollTop=messages.scrollHeight;}
   });
 });
