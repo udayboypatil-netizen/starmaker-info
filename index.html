@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     const el=document.createElement("div");
     el.className="ai-msg "+(who==="user"?"user":"bot");
     const textNode=document.createElement("span");textNode.textContent=text;el.append(textNode);
-    if(who!=="user"){const voice=document.createElement("button");voice.type="button";voice.className="ai-voice";voice.textContent="🔊 सुनें";voice.addEventListener("click",()=>{if(!("speechSynthesis" in window)||!("SpeechSynthesisUtterance" in window)){voice.textContent="आवाज़ उपलब्ध नहीं";return;}window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang=/[\\u0900-\\u097F]/.test(text)?"hi-IN":"en-IN";utterance.rate=1;voice.textContent="▶ फिर सुनें";utterance.onend=()=>{voice.textContent="🔊 सुनें"};window.speechSynthesis.speak(utterance)});el.append(voice)}
+    if(who!=="user"){const voice=document.createElement("button");voice.type="button";voice.className="ai-voice";voice.textContent="🔊 सुनें";voice.addEventListener("click",()=>{if(!("speechSynthesis" in window)||!("SpeechSynthesisUtterance" in window)){voice.textContent="आवाज़ उपलब्ध नहीं";return;}window.speechSynthesis.cancel();const spokenText=textNode.textContent||"";if(!spokenText.trim())return;const utterance=new SpeechSynthesisUtterance(spokenText);utterance.lang=/[\u0900-\u097F]/.test(spokenText)?"hi-IN":"en-IN";utterance.rate=1;voice.textContent="▶ फिर सुनें";utterance.onend=()=>{voice.textContent="🔊 सुनें"};window.speechSynthesis.speak(utterance)});el.append(voice)}
     messages.append(el);messages.scrollTop=messages.scrollHeight;return el;
   }
   openBtn.addEventListener("click",()=>{panel.classList.toggle("hidden");if(!panel.classList.contains("hidden"))input.focus()});
