@@ -10,7 +10,7 @@
 .ai-close{padding:5px 10px;background:#30283d}.ai-messages{flex:1;overflow:auto;padding:13px;display:flex;flex-direction:column;gap:10px}
 .ai-msg{max-width:88%;padding:10px 12px;border-radius:13px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px}
 .ai-msg.bot{align-self:flex-start;background:#242132;border:1px solid #383249}.ai-msg.user{align-self:flex-end;background:#5b21b6}
-.ai-compose{display:flex;gap:8px;padding:10px;border-top:1px solid #393047}.ai-compose input{min-width:0;width:100%;font-size:14px;padding:11px}.ai-compose button{padding:10px 13px}.ai-hint{font-size:11px;color:#aaa4b8;padding:0 12px 9px}
+.ai-compose{display:flex;gap:8px;padding:10px;border-top:1px solid #393047}.ai-compose input{min-width:0;width:100%;font-size:14px;padding:11px}.ai-compose button{padding:10px 13px}.ai-hint{font-size:11px;color:#aaa4b8;padding:0 12px 9px}.ai-voice{display:block;margin-top:7px;padding:5px 9px;border:1px solid #66518a;border-radius:9px;background:#302344;color:#e9d5ff;font-size:12px;font-weight:700}.ai-msg.bot .ai-voice{align-self:flex-start}
 </style></head><body>
 <header class="top"><div class="wrap"><div class="brandrow"><img class="logoMark" id="siteLogo" src="" alt="Website logo"><div><div class="brand">Star<span>Lookup</span></div><div class="tag">StarMaker profile information by SID</div><div class="tested">✓ STARAMAKER SID LOOKUP · TESTED</div></div></div></div></header>
 <main class="wrap"><section class="hero"><h1>Find a StarMaker Profile</h1><p>Enter a StarMaker SID to view available profile and family details.</p></section>
@@ -46,10 +46,13 @@ document.addEventListener("DOMContentLoaded",()=>{
   const send=document.getElementById("starlookupChatSend");
   if(!panel||!openBtn||!form)return;
   const history=[];
+  const welcome=messages.querySelector('.ai-msg.bot');
+  if(welcome){const voice=document.createElement('button');voice.type='button';voice.className='ai-voice';voice.textContent='🔊 सुनें';voice.addEventListener('click',()=>{if(!('speechSynthesis' in window)){voice.textContent='आवाज़ उपलब्ध नहीं';return;}window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(welcome.firstChild?.textContent||welcome.textContent);utterance.lang='hi-IN';utterance.onend=()=>voice.textContent='🔊 सुनें';voice.textContent='▶ फिर सुनें';window.speechSynthesis.speak(utterance)});welcome.append(voice)}
   function bubble(text,who){
     const el=document.createElement("div");
     el.className="ai-msg "+(who==="user"?"user":"bot");
-    el.textContent=text;
+    const textNode=document.createElement("span");textNode.textContent=text;el.append(textNode);
+    if(who!=="user"){const voice=document.createElement("button");voice.type="button";voice.className="ai-voice";voice.textContent="🔊 सुनें";voice.addEventListener("click",()=>{if(!("speechSynthesis" in window)||!("SpeechSynthesisUtterance" in window)){voice.textContent="आवाज़ उपलब्ध नहीं";return;}window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang=/[\\u0900-\\u097F]/.test(text)?"hi-IN":"en-IN";utterance.rate=1;voice.textContent="▶ फिर सुनें";utterance.onend=()=>{voice.textContent="🔊 सुनें"};window.speechSynthesis.speak(utterance)});el.append(voice)}
     messages.append(el);messages.scrollTop=messages.scrollHeight;return el;
   }
   openBtn.addEventListener("click",()=>{panel.classList.toggle("hidden");if(!panel.classList.contains("hidden"))input.focus()});
@@ -72,7 +75,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 <button class="ai-fab" id="starlookupChat" type="button" aria-label="Open AI assistant">✦ AI Assistant</button>
 <section class="ai-panel hidden" id="starlookupChatPanel" aria-label="StarLookup AI Assistant">
   <div class="ai-head"><span>✦ StarLookup AI Assistant</span><button class="ai-close" id="starlookupChatClose" type="button">×</button></div>
-  <div class="ai-messages" id="starlookupChatMessages"><div class="ai-msg bot">Namaste! Main StarLookup AI Assistant hoon. SID lookup, activation, plan expiry aur profile details ke baare mein pooch sakte hain.</div></div>
+  <div class="ai-messages" id="starlookupChatMessages"><div class="ai-msg bot">Namaste! Sabse pehle bataiye: **kya aapne StarLookup ka plan le liya hai?** Haan ya nahin mein jawab dein.</div></div>
   <form class="ai-compose" id="starlookupChatForm"><input id="starlookupChatInput" maxlength="1500" autocomplete="off" placeholder="Yahan apna sawal likhein…" required><button id="starlookupChatSend" type="submit">Send</button></form>
   <div class="ai-hint">AI kabhi bhi aapse password ya API key nahi maangega.</div>
 </section>
