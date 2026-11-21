@@ -2,6 +2,15 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050507"><link id="sharedFavicon" rel="icon" href=""><title>StarLookup — StarMaker Profile Search</title>
 <style>
 :root{color-scheme:dark;--bg:#050507;--panel:#101018;--line:#292638;--muted:#a4a1b2;--purple:#9333ea;--cyan:#06b6d4}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#26113e 0,transparent 48%),var(--bg);color:#f7f5fb;font:15px/1.55 system-ui, sans-serif;min-height:100vh}.wrap{width:min(960px,92%);margin:auto}.top{padding:16px 0;border-bottom:1px solid #ffffff18}.brandrow{display:flex;align-items:center;gap:12px}.logoMark{width:54px;height:54px;display:block;object-fit:cover;border-radius:14px;box-shadow:0 5px 22px #0005}.brand{font-size:24px;font-weight:850;line-height:1.1}.brand span{color:#c084fc}.tag,.muted{color:var(--muted);font-size:13px}.tested{display:inline-flex;align-items:center;gap:5px;margin-top:5px;border:1px solid #285b50;background:#0b2823;color:#86efac;padding:3px 8px;border-radius:99px;font-size:10px;font-weight:800;letter-spacing:.04em}.planbox{border:1px solid #3b2a55;background:linear-gradient(130deg,#171126,#0b1720);border-radius:16px;padding:16px;margin:15px auto;max-width:680px}.planrow{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.expiry{font-size:18px;font-weight:800;color:#e9d5ff}.countdown{font-variant-numeric:tabular-nums;color:#67e8f9;font-size:14px;font-weight:750;margin-top:5px}main{padding:38px 0 70px}.hero{text-align:center;margin-bottom:26px}.hero h1{font-size:clamp(28px,5vw,42px);margin:0 0 8px}.hero p{color:var(--muted);margin:0}.panel{background:linear-gradient(145deg,#12121c,#0a0a10);border:1px solid var(--line);border-radius:18px;padding:22px;margin:16px 0;box-shadow:0 18px 50px #0006}.form{display:flex;gap:10px;max-width:680px;margin:24px auto 10px;padding:10px;background:#101018;border:1px solid var(--line);border-radius:16px}input{min-width:0;flex:1;background:#090910;border:1px solid #302c40;border-radius:10px;color:white;padding:13px;font-size:16px;outline:none}button{border:0;border-radius:11px;background:linear-gradient(110deg,var(--purple),#6d28d9);color:white;font-weight:750;padding:12px 20px;font-size:15px;cursor:pointer}button:disabled{opacity:.55}.note,.status{text-align:center;color:#bcb4d1;font-size:13px;min-height:24px}.hidden{display:none!important}.profile{display:flex;align-items:center;gap:16px;flex-wrap:wrap}.avatar{width:94px;height:94px;border-radius:50%;object-fit:cover;background:#222;border:3px solid #9333ea88}.name{font-size:24px;font-weight:800;overflow-wrap:anywhere}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:18px}.field{background:#171722;border:1px solid #2b2939;border-radius:12px;padding:12px;min-width:0}.label{font-size:11px;color:#aaa4b8;text-transform:uppercase;letter-spacing:.07em}.value{font-weight:650;overflow-wrap:anywhere;margin-top:4px}.section-title{font-size:18px;margin:0 0 10px}.family-head{display:flex;align-items:center;gap:12px}.family-icon{width:56px;height:56px;border-radius:12px;object-fit:cover}.family-cover{width:100%;max-height:180px;object-fit:cover;border-radius:12px;margin-top:14px}footer{text-align:center;color:#777184;font-size:12px;padding:25px;border-top:1px solid #ffffff12}.telegram{display:inline-block;margin:6px auto 0;padding:10px 16px;border-radius:10px;background:#229ed9;color:#fff;text-decoration:none;font-weight:750}.contact{text-align:center;margin:8px auto 0;color:#bcb4d1;font-size:13px}@media(max-width:520px){main{padding-top:25px}.form{flex-direction:column}.form button{width:100%}.panel{padding:16px}}
+
+/* StarLookup AI helper */
+.ai-fab{position:fixed;right:18px;bottom:18px;z-index:9998;border:0;border-radius:999px;padding:14px 18px;background:linear-gradient(110deg,#9333ea,#6d28d9);color:#fff;font-weight:800;box-shadow:0 8px 28px #0009;cursor:pointer}
+.ai-panel{position:fixed;right:16px;bottom:78px;z-index:9999;width:min(370px,calc(100vw - 24px));height:min(540px,calc(100vh - 110px));display:flex;flex-direction:column;background:#101018;border:1px solid #49405d;border-radius:18px;box-shadow:0 18px 60px #000b;overflow:hidden}
+.ai-head{display:flex;justify-content:space-between;align-items:center;padding:13px 15px;background:#1b1428;border-bottom:1px solid #393047;font-weight:800}
+.ai-close{padding:5px 10px;background:#30283d}.ai-messages{flex:1;overflow:auto;padding:13px;display:flex;flex-direction:column;gap:10px}
+.ai-msg{max-width:88%;padding:10px 12px;border-radius:13px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px}
+.ai-msg.bot{align-self:flex-start;background:#242132;border:1px solid #383249}.ai-msg.user{align-self:flex-end;background:#5b21b6}
+.ai-compose{display:flex;gap:8px;padding:10px;border-top:1px solid #393047}.ai-compose input{min-width:0;width:100%;font-size:14px;padding:11px}.ai-compose button{padding:10px 13px}.ai-hint{font-size:11px;color:#aaa4b8;padding:0 12px 9px}
 </style></head><body>
 <header class="top"><div class="wrap"><div class="brandrow"><img class="logoMark" id="siteLogo" src="" alt="Website logo"><div><div class="brand">Star<span>Lookup</span></div><div class="tag">StarMaker profile information by SID</div><div class="tested">✓ STARAMAKER SID LOOKUP · TESTED</div></div></div></div></header>
 <main class="wrap"><section class="hero"><h1>Find a StarMaker Profile</h1><p>Enter a StarMaker SID to view available profile and family details.</p></section>
@@ -25,4 +34,46 @@ if(activationToken)refreshPlan();
 
 async function loadSharedLogo(){try{const r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"logo-get"})});const d=await r.json();if(d.success&&d.logo_data_url){const img=$("siteLogo");if(img)img.src=d.logo_data_url;const fav=document.getElementById("sharedFavicon");if(fav)fav.href=d.logo_data_url;}}catch(e){console.warn("Shared logo could not be loaded",e)}}
 loadSharedLogo();
-</script></body></html>
+
+/* Visitor-only Gemini assistant */
+(()=>{
+  const panel=document.getElementById("starlookupChatPanel");
+  const openBtn=document.getElementById("starlookupChat");
+  const closeBtn=document.getElementById("starlookupChatClose");
+  const form=document.getElementById("starlookupChatForm");
+  const input=document.getElementById("starlookupChatInput");
+  const messages=document.getElementById("starlookupChatMessages");
+  const send=document.getElementById("starlookupChatSend");
+  if(!panel||!openBtn||!form)return;
+  const history=[];
+  function bubble(text,who){
+    const el=document.createElement("div");
+    el.className="ai-msg "+(who==="user"?"user":"bot");
+    el.textContent=text;
+    messages.append(el);messages.scrollTop=messages.scrollHeight;return el;
+  }
+  openBtn.addEventListener("click",()=>{panel.classList.toggle("hidden");if(!panel.classList.contains("hidden"))input.focus()});
+  closeBtn.addEventListener("click",()=>panel.classList.add("hidden"));
+  form.addEventListener("submit",async e=>{
+    e.preventDefault();
+    const message=input.value.trim();if(!message||send.disabled)return;
+    bubble(message,"user");history.push({role:"user",text:message});input.value="";send.disabled=true;
+    const waiting=bubble("Soch raha hoon…","bot");
+    try{
+      const r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"assistant-chat",history:history.slice(-12)})});
+      const d=await r.json();if(!r.ok||!d.success)throw new Error(d.message||"Assistant abhi reply nahi kar pa raha.");
+      waiting.textContent=d.answer;history.push({role:"model",text:d.answer});
+    }catch(err){waiting.textContent=err.message||"Network error. Dobara try karein.";}
+    finally{send.disabled=false;input.focus();messages.scrollTop=messages.scrollHeight;}
+  });
+})();
+
+</script>
+<button class="ai-fab" id="starlookupChat" type="button" aria-label="Open AI assistant">✦ AI Assistant</button>
+<section class="ai-panel hidden" id="starlookupChatPanel" aria-label="StarLookup AI Assistant">
+  <div class="ai-head"><span>✦ StarLookup AI Assistant</span><button class="ai-close" id="starlookupChatClose" type="button">×</button></div>
+  <div class="ai-messages" id="starlookupChatMessages"><div class="ai-msg bot">Namaste! Main StarLookup AI Assistant hoon. SID lookup, activation, plan expiry aur profile details ke baare mein pooch sakte hain.</div></div>
+  <form class="ai-compose" id="starlookupChatForm"><input id="starlookupChatInput" maxlength="1500" autocomplete="off" placeholder="Yahan apna sawal likhein…" required><button id="starlookupChatSend" type="submit">Send</button></form>
+  <div class="ai-hint">AI kabhi bhi aapse password ya API key nahi maangega.</div>
+</section>
+</body></html>
