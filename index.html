@@ -36,7 +36,7 @@ async function loadSharedLogo(){try{const r=await fetch(API,{method:"POST",heade
 loadSharedLogo();
 
 /* Visitor-only Gemini assistant */
-(()=>{
+document.addEventListener("DOMContentLoaded",()=>{
   const panel=document.getElementById("starlookupChatPanel");
   const openBtn=document.getElementById("starlookupChat");
   const closeBtn=document.getElementById("starlookupChatClose");
@@ -66,7 +66,7 @@ loadSharedLogo();
     }catch(err){waiting.textContent=err.message||"Network error. Dobara try karein.";}
     finally{send.disabled=false;input.focus();messages.scrollTop=messages.scrollHeight;}
   });
-})();
+});
 
 </script>
 <button class="ai-fab" id="starlookupChat" type="button" aria-label="Open AI assistant">✦ AI Assistant</button>
