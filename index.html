@@ -17,14 +17,50 @@
 
 /* YouTube monetization checker */
 .yt-panel{margin:18px 0;background:linear-gradient(145deg,#1b1111,#101018);border:1px solid #713333;border-radius:16px;padding:18px}.yt-form{display:flex;gap:9px;margin:14px 0 8px}.yt-result{margin-top:16px}.yt-banner{width:100%;max-height:190px;object-fit:cover;border-radius:12px;background:#222}.yt-profile{display:flex;align-items:center;gap:14px;margin-top:12px;flex-wrap:wrap}.yt-avatar{width:86px;height:86px;border-radius:50%;object-fit:cover;border:2px solid #ef4444;background:#222}.yt-channelname{font-size:21px;font-weight:850;overflow-wrap:anywhere}.yt-state{display:inline-block;padding:5px 10px;border-radius:99px;font-size:12px;font-weight:850;background:#123b2a;color:#86efac}.yt-state.off{background:#422020;color:#fca5a5}.yt-disclaimer{font-size:12px;color:#aaa4b8;margin-top:12px;line-height:1.5}@media(max-width:520px){.yt-form{flex-direction:column}.yt-form button{width:100%}}
+
+/* Compact first-screen layout */
+.top{padding:7px 0}
+.logoMark{width:38px;height:38px;border-radius:10px}
+.brand{font-size:19px}
+.tag{font-size:10px;line-height:1.2}
+.tested{font-size:8px;padding:2px 6px;margin-top:2px}
+main{padding:10px 0 35px}
+.hero{margin:0 0 8px}
+.hero h1{font-size:20px;margin:0 0 2px}
+.hero p{font-size:10px;line-height:1.3}
+.panel,.trialbox,.ig-panel,.yt-panel{padding:9px;margin:7px 0;border-radius:11px}
+.section-title{font-size:14px;margin:0 0 2px}
+.free-hint{font-size:9px;margin:0 0 5px}
+.form,.ig-form,.yt-form{gap:6px;margin:6px 0 3px;padding:5px;border-radius:10px}
+input{padding:8px 9px;font-size:13px;border-radius:8px}
+button{padding:8px 11px;font-size:12px;border-radius:8px}
+.note,.status{font-size:10px;min-height:13px;margin:2px 0}
+.contact{margin:2px auto;font-size:10px}
+.telegram{margin:2px auto;padding:5px 9px;font-size:10px}
+#activationPanel .muted{font-size:10px;margin:2px 0}
+#activationPanel .form{max-width:none;margin:5px 0 2px;display:flex;flex-direction:row}
+#activationCode{min-width:0}
+#activateBtn{flex:0 0 auto}
+#freeTrialPanel .form{max-width:none}
+@media(max-width:520px){
+  .wrap{width:94%}
+  .ig-form,.yt-form{flex-direction:row}
+  .ig-form button,.yt-form button{width:auto;white-space:nowrap}
+  #trialForm{flex-direction:row}
+  #trialForm button{width:auto;white-space:nowrap}
+  .ig-panel,.yt-panel,.trialbox{padding:8px}
+  .ig-panel input,.yt-panel input,#trialForm input{font-size:12px;padding:8px 7px}
+}
+
 </style></head><body>
 <header class="top"><div class="wrap"><div class="brandrow"><img class="logoMark" id="siteLogo" src="" alt="Website logo" style="visibility:hidden"><div><div class="brand">Star<span>Lookup</span></div><div class="tag">StarMaker profile information by SID</div><div class="tested">✓ STARAMAKER SID LOOKUP · TESTED</div></div></div></div></header>
 <main class="wrap"><div id="liveNotice" class="notice-banner" role="status" aria-live="polite"></div><section class="hero"><h1>Find a StarMaker Profile</h1><p>Enter a StarMaker SID to view available profile and family details.</p></section>
+<section id="activationPanel" class="panel"><h2 class="section-title">Activate Search</h2><p class="muted">Enter the activation code to unlock SID search. Don’t have a code yet?</p><div class="contact"><a class="telegram" href="https://t.me/Sunilpatil1900" target="_blank" rel="noopener">Get Code on Telegram · @Sunilpatil1900</a></div><form id="activateForm" class="form"><input id="activationCode" placeholder="SL-XXXXXXXXXXXX" autocomplete="off" maxlength="15" required><button id="activateBtn">Activate</button></form><div id="activationStatus" class="status"></div></section>
 <section id="freeTrialPanel" class="trialbox"><h2 class="section-title">⭐ StarMaker Profile Lookup</h2><div class="free-hint">2 free lookups · Sirf naam dikhega</div><form id="trialForm" class="form"><input id="trialSid" inputmode="numeric" autocomplete="off" placeholder="Enter StarMaker SID" maxlength="20" required><button id="trialBtn" type="submit">Get Free Preview</button></form><div id="trialStatus" class="status"></div><div id="trialResult" class="hidden"><div class="trial-result"><div><div id="trialName" class="name"></div><div id="trialSidText" class="muted"></div></div></div><p class="muted">Free lookup mein sirf profile ka naam dikhaya jata hai.</p></div></section><section id="websiteTools" class="panel hidden"><h2 class="section-title">🧰 More Tools</h2><p class="muted">Useful tools — open karne ke liye tool par tap karein.</p><div id="websiteToolsGrid" class="website-tools-grid"></div></section>
 
 <section class="ig-panel" id="instagramLookup"><h2 class="section-title">📸 Instagram Profile Lookup</h2><div class="free-hint">2 free lookups · Sirf naam dikhega</div><form id="instagramForm" class="ig-form"><input id="instagramUsername" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Instagram username (e.g. sunil_patil__307)" maxlength="30" required><button id="instagramBtn" type="submit">Find Profile</button></form><div id="instagramStatus" class="status"></div><div id="instagramResult" class="ig-result hidden"><div class="ig-profile"><img id="igAvatar" class="ig-avatar" alt="Instagram profile photo"><div><div id="igFullName" class="ig-username"></div><div id="igUsernameText" class="muted"></div><div id="igBadges"></div></div></div><div id="igProfileGrid" class="grid"></div></div></section>
 <section class="yt-panel" id="youtubeMonetization"><h2 class="section-title">▶️ YouTube Monetization Checker</h2><div class="free-hint">2 free lookups · Sirf channel ka naam dikhega</div><form id="youtubeForm" class="yt-form"><input id="youtubeUrl" type="url" autocomplete="url" placeholder="Paste YouTube channel URL" required><button id="youtubeBtn" type="submit">Analyze Channel</button></form><div id="youtubeStatus" class="status"></div><div id="youtubeResult" class="yt-result hidden"><img id="ytBanner" class="yt-banner hidden" alt="Channel banner"><div class="yt-profile"><img id="ytAvatar" class="yt-avatar" alt="Channel avatar"><div><div id="ytName" class="yt-channelname"></div><div id="ytHandle" class="muted"></div><div id="ytMonetized"></div></div></div><div id="ytGrid" class="grid"></div><p id="ytNote" class="yt-disclaimer"></p></div></section>
-<section id="activationPanel" class="panel"><h2 class="section-title">Activate Search</h2><p class="muted">Enter the activation code to unlock SID search. Don’t have a code yet?</p><div class="contact"><a class="telegram" href="https://t.me/Sunilpatil1900" target="_blank" rel="noopener">Get Code on Telegram · @Sunilpatil1900</a></div><form id="activateForm" class="form"><input id="activationCode" placeholder="SL-XXXXXXXXXXXX" autocomplete="off" maxlength="15" required><button id="activateBtn">Activate</button></form><div id="activationStatus" class="status"></div></section>
+
 <section id="planPanel" class="planbox hidden"><div class="planrow"><div><div class="label">Your active plan</div><div id="planName" class="expiry">StarLookup Plan</div></div><div style="text-align:right"><div class="label">Plan expires (India time)</div><div id="planExpiry" class="expiry">—</div></div></div><div id="planCountdown" class="countdown">Checking plan validity…</div></section><section id="searchPanel" class="hidden"><form id="searchForm" class="form"><input id="sid" inputmode="numeric" autocomplete="off" placeholder="Enter StarMaker SID" maxlength="20" required><button id="searchBtn">Search</button></form><div class="note">SID only · Activation required · No recording ID</div><div id="status" class="status"></div></section>
 
 <section id="result" class="hidden"><div class="panel"><div class="profile"><img id="avatar" class="avatar" alt="Profile picture"><div><div id="name" class="name"></div><div id="sidText" class="muted"></div><div id="vipText"></div></div></div><div id="userGrid" class="grid"></div></div><div id="familyPanel" class="panel hidden"><h2 class="section-title">Family Information</h2><div class="family-head"><img id="familyIcon" class="family-icon" alt="Family icon"><div><div id="familyName" class="name" style="font-size:20px"></div><div id="familySlogan" class="muted"></div></div></div><img id="familyCover" class="family-cover hidden" alt="Family cover"><div id="familyGrid" class="grid"></div></div></section>
