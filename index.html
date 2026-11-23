@@ -42,7 +42,42 @@ button{padding:8px 11px;font-size:12px;border-radius:8px}
 #activationCode{min-width:0}
 #activateBtn{flex:0 0 auto}
 #freeTrialPanel .form{max-width:none}
-/* Make the activation-code field full-width and keep the button inside its panel */\n#activationPanel .form{display:grid!important;grid-template-columns:minmax(0,1fr) 112px!important;align-items:stretch;width:100%;max-width:100%;min-width:0;box-sizing:border-box;overflow:hidden}\n#activationPanel #activationCode{display:block;width:100%!important;min-width:0!important;max-width:none!important;flex:none!important;height:48px;min-height:48px;box-sizing:border-box}\n#activationPanel #activateBtn{display:block;width:100%;min-width:0;height:48px;min-height:48px;padding:8px 10px;font-size:14px;white-space:nowrap;box-sizing:border-box}\n.logoMark{flex:0 0 42px;width:42px;height:42px;object-fit:cover;border-radius:11px;background:linear-gradient(135deg,#9333ea,#06b6d4)}\n/* Make activation-code entry easy to see and tap */
+/* Make the activation-code field full-width and keep the button inside its panel */\n#activationPanel .form{display:grid!important;grid-template-columns:minmax(0,1fr) 112px!important;align-items:stretch;width:100%;max-width:100%;min-width:0;box-sizing:border-box;overflow:hidden}\n#activationPanel #activationCode{display:block;width:100%!important;min-width:0!important;max-width:none!important;flex:none!important;height:48px;min-height:48px;box-sizing:border-box}\n#activationPanel #activateBtn{display:block;width:100%;min-width:0;height:48px;min-height:48px;padding:8px 10px;font-size:14px;white-space:nowrap;box-sizing:border-box}\n.logoMark{flex:0 0 42px;width:42px;height:42px;object-fit:cover;border-radius:11px;background:linear-gradient(135deg,#9333ea,#06b6d4)}\n/* Restore the original full-width activation form layout */
+#activationPanel .form{
+  display:flex!important;
+  flex-direction:column!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  gap:10px!important;
+  padding:0!important;
+  margin:10px 0 4px!important;
+  box-sizing:border-box!important;
+  overflow:visible!important;
+}
+#activationPanel #activationCode{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  flex:none!important;
+  height:54px!important;
+  min-height:54px!important;
+  box-sizing:border-box!important;
+  font-size:17px!important;
+  padding:12px 14px!important;
+}
+#activationPanel #activateBtn{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  height:54px!important;
+  min-height:54px!important;
+  flex:none!important;
+  box-sizing:border-box!important;
+  font-size:16px!important;
+}
+/* Make activation-code entry easy to see and tap */
 #activationPanel{padding:12px 14px;margin:8px auto;border:1px solid #8b5cf6;background:linear-gradient(135deg,#211438,#111827);max-width:680px}
 #activationPanel .section-title{font-size:17px;margin-bottom:4px}
 #activationPanel .muted{font-size:12px;line-height:1.4}
