@@ -58,26 +58,34 @@ $("instagramForm").addEventListener("submit",async e=>{e.preventDefault();const 
 $("youtubeForm").addEventListener("submit",async e=>{e.preventDefault();const url=$("youtubeUrl").value.trim();let parsed;try{parsed=new URL(url)}catch{$("youtubeStatus").textContent="Valid YouTube channel link paste karein.";return}const host=parsed.hostname.toLowerCase().replace(/^www[.]/,"");if(!["youtube.com","m.youtube.com","youtu.be"].includes(host)){$("youtubeStatus").textContent="Sirf YouTube channel/video link allowed hai.";return}const btn=$("youtubeBtn");btn.disabled=true;$("youtubeStatus").textContent="Channel ka complete analysis ho raha hai…";$("youtubeResult").classList.add("hidden");try{const r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+activationToken},body:JSON.stringify({action:"youtube-monetization",url})});const d=await r.json();if(r.status===403)throw new Error("Active plan verify nahi hua. Dobara activate karein.");if(!r.ok||!d.success)throw new Error(d.message||"YouTube analysis failed.");const p=d.channel||d.data||d;$("ytName").textContent=p.name||p.title||"YouTube Channel";$("ytHandle").textContent=p.handle||p.customUrl||p.url||url;image("ytAvatar",p.avatarUrl||p.avatar_url||p.thumbnail||p.thumbnailUrl||"");image("ytBanner",p.bannerUrl||p.banner_url||"");$("ytMonetized").replaceChildren();const state=document.createElement("span");state.className="yt-state "+(p.monetized===true?"":"off");state.textContent=p.statusLabel||(p.monetized===true?"MONETIZATION INDICATED":"MONETIZATION NOT INDICATED");$("ytMonetized").append(state);$("ytGrid").replaceChildren();const fields=[["Channel ID",p.channelId],["Country",p.country],["Created",p.publishedAt],["Subscribers",p.subscribers],["Total views",p.views],["Videos",p.videos],["Estimated watch hours",p.estimatedWatchHours],["Audience retention",p.retentionPct],["Subscriber target",p.subscriberTarget],["Watch-hours target",p.watchHoursTarget],["Description",p.description]];for(const [k,v] of fields)if(v!==undefined&&v!==null&&v!=="")igAddField($("ytGrid"),k,v);$("ytNote").textContent=p.statusNote||"Monetization result is a third-party estimate based on public channel data; it is not official YouTube approval or private watch-hour data.";$("youtubeResult").classList.remove("hidden");$("youtubeStatus").textContent="YouTube channel analysis complete."}catch(err){$("youtubeStatus").textContent=err.message||"Network error. Dobara try karein."}finally{btn.disabled=false}});
 $("mobileForm").addEventListener("submit",async e=>{
  e.preventDefault();
- const mobile=$("mobileNumber").value.replace(/[\s-]/g,"");
- if(!/^\d{10,15}$/.test(mobile)){ $("mobileStatus").textContent="Enter a valid 10–15 digit mobile number."; return; }
+ const mobile=$("mobileNumber").value.replace(/[\\s-]/g,"");
+ if(!/^\\d{10,15}$/.test(mobile)){ $("mobileStatus").textContent="Enter a valid 10–15 digit mobile number."; return; }
  const btn=$("mobileBtn");btn.disabled=true;
- $("mobileStatus").textContent="Preparing demo result…";
+ $("mobileStatus").textContent="Fetching API result…";
  $("mobileResult").replaceChildren();$("mobileResult").classList.add("hidden");
- // Clearly labeled sample output only; no real subscriber lookup is performed.
- const operators=["JIO","AIRTEL","VI","BSNL"];
- const circles=["GUJARAT","MAHARASHTRA","DELHI","RAJASTHAN"];
- const seed=Number(mobile.slice(-2))||0;
- const demo={operator:operators[seed%operators.length],circle:circles[Math.floor(seed/4)%circles.length],record_type:"Demo dataset",matches:(seed%6)+1};
- const fields=[["Result type","DEMO RESULT · NOT VERIFIED"],["Mobile number",mobile],["Operator",demo.operator],["Circle",demo.circle],["Record type",demo.record_type],["Sample matches",demo.matches]];
- for(const [label,value] of fields){
-   const card=document.createElement("div");card.className="field";
-   const heading=document.createElement("div");heading.className="label";heading.textContent=label;
-   const details=document.createElement("div");details.className="value";details.textContent=String(value);
-   card.append(heading,details);$("mobileResult").append(card);
- }
- $("mobileResult").classList.remove("hidden");
- $("mobileStatus").textContent="Demo generated. This is not a real telecom or subscriber lookup.";
- btn.disabled=false;
+ try{
+   const r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+activationToken},body:JSON.stringify({action:"mobile-lookup",mobile})});
+   const d=await r.json().catch(()=>({}));
+   if(!r.ok||!d.success)throw new Error(d.message||"Mobile lookup API did not return data.");
+   const fields=[["Mobile number",d.query||mobile],["Total records",d.total??(d.records||[]).length]];
+   if(d.ms!==undefined)fields.push(["API response time",String(d.ms)+" ms"]);
+   if(d.credits!==undefined)fields.push(["API credits used",d.credits]);
+   (d.records||[]).forEach((item,i)=>{
+     fields.push(["Record "+(i+1)+" · Circle",item.circle||"Not provided"]);
+     fields.push(["Record "+(i+1)+" · Source",item.record_type||"Not provided"]);
+     if(item.hits!==null&&item.hits!==undefined)fields.push(["Record "+(i+1)+" · Hits",item.hits]);
+   });
+   if(!d.records||!d.records.length)throw new Error("API ne koi displayable record return nahi kiya.");
+   for(const [label,value] of fields){
+     const card=document.createElement("div");card.className="field";
+     const heading=document.createElement("div");heading.className="label";heading.textContent=label;
+     const details=document.createElement("div");details.className="value";details.textContent=String(value);
+     card.append(heading,details);$("mobileResult").append(card);
+   }
+   $("mobileResult").classList.remove("hidden");
+   $("mobileStatus").textContent="API result received.";
+ }catch(err){$("mobileStatus").textContent=err.message||"Mobile lookup failed. Please try again."}
+ finally{btn.disabled=false}
 });
 if(activationToken)refreshPlan();
 
