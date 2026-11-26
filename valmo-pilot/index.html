@@ -56,19 +56,23 @@ main{flex:1;display:flex;flex-direction:column;padding:0 0 14px}
 <body>
 <div class="app">
 <header class="top">
-<svg class="logo" viewBox="0 0 100 100" aria-label="Valmo Pilot logo">
-<rect width="100" height="100" fill="#0c2e5d"/>
-<path d="M8 31 48 5h46L55 31z" fill="#55e5f4"/>
-<path d="M55 31 94 5v60L55 96z" fill="#087fb8"/>
-<path d="M20 39h17l13 27 13-27h17L58 78H43z" fill="white"/>
+<svg class="logo" viewBox="0 0 100 120" aria-label="Valmo Pilot logo">
+<path d="M5 29 46 3h49L55 29z" fill="#55e5f4"/>
+<path d="M55 29 95 3v66L55 104z" fill="#087fb8"/>
+<path d="M5 29h50v75L5 78z" fill="#0c2e5d"/>
+<path d="M18 38h14l13 29 13-29h15L50 82H39z" fill="#fff"/>
+<text x="50" y="117" text-anchor="middle" font-size="15" font-family="Arial,sans-serif" letter-spacing="2" fill="#0c2e5d">PILOT</text>
 </svg>
-<div class="head">Scan Your Shipments</div>
+<div class="head">Click here to Scan Shipments</div>
 </header>
 <main>
 <div class="scan-area" id="scanArea">
 <div class="error" id="error" role="alert">⚠ &nbsp; Not found</div>
 <div class="scan-frame" id="scanFrame">
-<video id="video" playsinline muted></video>
+<div class="scan-prompt">
+<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="square"><path d="M8 23V9h14M42 9h14v14M56 41v14H42M22 55H8V41"/><path d="M20 20v24m7-24v24m7-24v24m7-24v24m7-24v24"/></svg>
+<span>Click here to Scan Shipments</span>
+</div>
 </div>
 <section id="success">
 <div class="success-mark">✓</div>
