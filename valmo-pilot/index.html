@@ -14,7 +14,7 @@ body{background:#f1f1f1}
 .top{height:82px;background:#fff;display:flex;align-items:center;padding:0 22px;gap:18px;box-shadow:0 2px 5px #00000012;z-index:2}
 .back{font-size:32px;line-height:1;color:var(--navy);font-weight:300}
 .head{font-size:27px;font-weight:700;letter-spacing:-.5px}
-.logo{width:43px;height:43px;flex:none;border-radius:5px;overflow:hidden;background:#0c2e5d}
+.logo{width:48px;height:56px;flex:none;overflow:visible}
 main{flex:1;display:flex;flex-direction:column;padding:0 0 14px}
 .scan-area{position:relative;flex:1;min-height:590px;background:linear-gradient(160deg,#b8b1ac 0%,#756e69 48%,#211f1e 100%);overflow:hidden;display:flex;align-items:center;justify-content:center}
 .scan-area:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#00000012,#00000020 55%,#00000085)}
@@ -24,7 +24,7 @@ main{flex:1;display:flex;flex-direction:column;padding:0 0 14px}
 #video{position:absolute;width:100%;height:100%;inset:0;object-fit:cover;display:none;z-index:0}
 .scan-area.camera-on #video{display:block}
 .scan-area.camera-on:before{background:linear-gradient(180deg,#00000022,#00000018 55%,#00000078)}
-.scan-frame.live:after{z-index:3}
+.scan-frame.live:after{z-index:3}\n.scan-prompt{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--navy);background:#f3f3fb;text-align:center;font-size:17px;font-weight:700;padding:12px}\n.scan-prompt svg{width:48px;height:48px;display:block}\n.scan-area.camera-on .scan-prompt{display:none}\n.scan-frame:not(.live){border:2px solid var(--navy);border-radius:17px;box-shadow:none}\n.scan-frame:not(.live):after{display:none}
 .error{display:none;position:absolute;top:22px;left:4%;right:4%;z-index:4;min-height:78px;border-radius:13px;background:#ed080d;color:white;font-size:19px;font-weight:700;align-items:center;justify-content:center;text-align:center;padding:15px 18px;box-shadow:0 5px 16px #0003}
 .error.show{display:flex;animation:drop .18s ease-out}
 @keyframes drop{from{transform:translateY(-8px);opacity:.3}to{transform:translateY(0);opacity:1}}
