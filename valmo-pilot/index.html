@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>Valmo Pilot</title>
+<style>
+:root{--green:#16a34a;--green-dark:#12813c;--ink:#17211b;--muted:#758078;--line:#e8eee9;--bg:#f5f8f5}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font:15px/1.45 Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+.app{min-height:100vh;max-width:520px;margin:auto;background:#fff;display:flex;flex-direction:column;box-shadow:0 0 40px #162b1710}
+.top{height:68px;padding:0 22px;display:flex;align-items:center;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:11px;font-size:21px;font-weight:850;letter-spacing:-.7px}
+.mark{width:34px;height:34px;border-radius:11px;background:var(--green);display:grid;place-items:center;color:white;font-size:21px;font-weight:900}
+main{padding:28px 22px;flex:1}
+.kicker{font-size:11px;letter-spacing:1.7px;color:var(--green-dark);font-weight:850;text-transform:uppercase}
+h1{font-size:27px;letter-spacing:-.8px;margin:7px 0 5px}
+.sub{color:var(--muted);font-size:14px;margin:0 0 25px}
+.scan-card{border:1px solid var(--line);border-radius:22px;padding:16px;background:#fff;box-shadow:0 10px 30px #152b1710}
+.view{height:300px;border-radius:16px;background:#101713;position:relative;overflow:hidden;display:grid;place-items:center}
+#camera{width:100%;height:100%;object-fit:cover;display:none}
+.scan-placeholder{color:#d7e3d9;text-align:center;padding:25px}
+.scan-placeholder svg{width:76px;height:76px;opacity:.9}
+.scan-placeholder p{font-size:13px;color:#b4c2b7;margin:12px 0 0}
+.frame{position:absolute;inset:50% auto auto 50%;width:220px;height:150px;transform:translate(-50%,-50%);border:2px solid #8df0a8;border-radius:16px;box-shadow:0 0 0 999px #0003;display:none;pointer-events:none}
+.frame:before,.frame:after{content:"";position:absolute;background:#8df0a8}
+.frame:before{left:15px;right:15px;top:50%;height:2px;box-shadow:0 0 12px #8df0a8}
+.scanline{position:absolute;left:10px;right:10px;height:2px;background:#a7ffc0;top:25%;box-shadow:0 0 12px #7bff9e;animation:scan 2s ease-in-out infinite}
+@keyframes scan{0%,100%{top:15%}50%{top:85%}}
+.scan-btn{width:100%;border:0;border-radius:14px;background:var(--green);color:white;font-size:16px;font-weight:800;padding:16px;margin-top:16px;cursor:pointer;box-shadow:0 7px 15px #16a34a30}
+.scan-btn:active{transform:scale(.99)}
+.scan-btn:disabled{opacity:.55}
+.hint{text-align:center;color:#89938c;font-size:12px;margin:13px 0 0}
+.status{text-align:center;min-height:22px;margin-top:10px;color:#66736a;font-size:13px}
+#success{display:none;text-align:center;padding:26px 10px 15px}
+.success-icon{width:86px;height:86px;border-radius:50%;background:#e9f9ee;margin:0 auto 17px;display:grid;place-items:center;color:var(--green);font-size:47px;font-weight:800;animation:pop .35s ease-out}
+@keyframes pop{0%{transform:scale(.5);opacity:0}100%{transform:scale(1);opacity:1}}
+#success h2{font-size:27px;letter-spacing:-.7px;margin:0 0 6px}
+#success p{color:var(--muted);margin:0;font-size:14px}
+.three{display:flex;justify-content:center;align-items:flex-end;gap:13px;height:76px;margin:27px auto 21px}
+.stand{width:45px;height:60px;border-radius:12px 12px 8px 8px;background:#e8f8ed;border:1px solid #c8efd3;display:grid;place-items:center;color:var(--green);font-size:25px;font-weight:900;position:relative}
+.stand:nth-child(2){height:72px}
+.stand:after{content:"";position:absolute;bottom:-6px;left:8px;right:8px;height:5px;border-radius:5px;background:#a7dfb6}
+.ref{display:inline-block;background:#f3f8f4;border:1px solid #e2eee5;border-radius:10px;padding:9px 14px;color:#526158;font-size:12px;margin-top:5px}
+.again{margin-top:23px;background:#fff;color:var(--green-dark);border:1px solid #b9dfc3;box-shadow:none}
+.demo{font-size:10px;color:#a2aaa4;text-align:center;padding:13px 8px 18px;letter-spacing:.6px}
+.hidden{display:none!important}
+@media(max-height:700px){.view{height:245px}main{padding-top:20px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div class="brand"><div class="mark">V</div><span>Valmo Pilot</span></div></header>
+<main>
+<section id="scanner">
+<div class="kicker">Pickup scan</div>
+<h1>Scan shipment barcode</h1>
+<p class="sub">Place the shipment barcode inside the frame to scan.</p>
+<div class="scan-card">
+<div class="view">
+<video id="camera" playsinline muted></video>
+<div class="scan-placeholder" id="placeholder">
+<svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="3"><path d="M10 28V13a3 3 0 0 1 3-3h15M52 10h15a3 3 0 0 1 3 3v15M70 52v15a3 3 0 0 1-3 3H52M28 70H13a3 3 0 0 1-3-3V52"/><path d="M20 30h40v20H20zM28 35v10m6-10v10m6-10v10m6-10v10m6-10v10"/></svg>
+<p>Camera will open when you tap Scan</p>
+</div>
+<div class="frame" id="frame"><div class="scanline"></div></div>
+</div>
+<button class="scan-btn" id="scanBtn">Scan Barcode</button>
+<div class="status" id="status" aria-live="polite"></div>
+</div>
+</section>
+<section id="success">
+<div class="success-icon">✓</div>
+<h2>Pickup Successful</h2>
+<p>Shipment scanned successfully</p>
+<div class="three" aria-hidden="true"><div class="stand">✓</div><div class="stand">✓</div><div class="stand">✓</div></div>
+<div class="ref" id="shipmentRef">Scan completed</div>
+<button class="scan-btn again" id="againBtn">Scan Another</button>
+</section>
+</main>
+<footer class="demo">VALMO PILOT · DEMO PREVIEW · NOT CONNECTED TO VALMO SYSTEMS</footer>
+</div>
+<script>
+const video=document.getElementById('camera'),scanBtn=document.getElementById('scanBtn'),statusEl=document.getElementById('status'),frame=document.getElementById('frame');
+let stream=null,detector=null,active=false;
+async function stopCamera(){active=false;if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}video.pause();video.srcObject=null;video.style.display='none';frame.style.display='none';document.getElementById('placeholder').style.display='block'}
+function showSuccess(value){stopCamera();document.getElementById('scanner').style.display='none';document.getElementById('shipmentRef').textContent=value?'Barcode: '+value:'Scan completed';document.getElementById('success').style.display='block'}
+async function scanLoop(){if(!active||!detector)return;try{if(video.readyState>=2){const codes=await detector.detect(video);if(codes.length&&codes[0].rawValue){showSuccess(codes[0].rawValue);return}}}catch(e){}if(active)requestAnimationFrame(scanLoop)}
+scanBtn.addEventListener('click',async()=>{
+ if(!('BarcodeDetector' in window)){statusEl.textContent='Barcode scanning is not supported in this browser. Open this demo in Chrome on Android.';return}
+ try{
+  scanBtn.disabled=true;statusEl.textContent='Opening camera…';
+  detector=new BarcodeDetector({formats:['qr_code','code_128','code_39','ean_13','ean_8','upc_a','upc_e','itf']});
+  stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
+  video.srcObject=stream;video.style.display='block';document.getElementById('placeholder').style.display='none';frame.style.display='block';
+  await video.play();active=true;statusEl.textContent='Point the camera at the shipment barcode';scanLoop();
+ }catch(e){statusEl.textContent=e.name==='NotAllowedError'?'Camera permission is required to scan.':'Unable to open camera. Please allow camera access and try again.';await stopCamera()}
+ finally{scanBtn.disabled=false}
+});
+document.getElementById('againBtn').addEventListener('click',()=>{
+ document.getElementById('success').style.display='none';document.getElementById('scanner').style.display='block';statusEl.textContent='';scanBtn.disabled=false;
+});
+window.addEventListener('pagehide',stopCamera);
+</script>
+</body>
+</html>
